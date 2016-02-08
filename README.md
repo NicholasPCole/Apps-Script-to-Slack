@@ -8,7 +8,7 @@ Installation
 
 If you only plan to use the code in a single project, you can simply create a new script file containing this code. The filename does not matter.
 
-On the other hand, if you want to use the code for multiple Apps Script project, the better approach would be as follows:
+On the other hand, if you want to use the code for multiple Apps Script project, the better approach would be to use the code as an [Apps Script library](https://developers.google.com/apps-script/guide_libraries):
 
 1.  Create a new project containing only this code.
 2.  From `File > Manage versions`, save a new version of the project.
