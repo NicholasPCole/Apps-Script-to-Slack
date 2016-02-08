@@ -40,6 +40,8 @@ function newAttachment(fallback, title, pretext, text, color, fields) {
 }
 
 /**
+ * Composes a field to include in an attachment.
+ *
  * @param {string} title Required title of the field.
  * @param {(string|number)} value Required value of the field.
  * @param {boolean} short Flag indicating whether the field is short enough to be displayed side-by-side with another field.
@@ -57,6 +59,8 @@ function newField(title, value, short) {
 }
 
 /**
+ * Composes and sends a message to a Slack incoming webhook.
+ *
  * @param {string} channel Required #channel or @username recipient of the message.
  * @param {string} text Required content of the message.
  * @param {?Array.<object>} attachments Optional array of attachments to include with the message.
