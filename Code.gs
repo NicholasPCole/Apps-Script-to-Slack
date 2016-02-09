@@ -41,12 +41,12 @@ function newAttachment(fallback, options) {
  */
 function newField(title, value, short) {
   var field = {
-    'title': title,
-    'value': value,
-    'short': short
+    "title": title,
+    "value": value,
+    "short": short
   };
   
-  Logger.log('New attachment field: ' + JSON.stringify(field));
+  Logger.log("New attachment field: " + JSON.stringify(field));
   return field;
 }
 
