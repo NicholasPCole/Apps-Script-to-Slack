@@ -1,47 +1,39 @@
-/**
- * Composes an attachment to be included with the message.
- *
- * @param {string} fallback Required text summary of the attachment that is shown by clients that understand attachments but choose not to show them.
- * @param {?string} title Optional title of the attachment.
- * @param {?string} pretext Optional text that should appear above the formatted data.
- * @param {?string} text Optional text that should appear within the attachment.
- * @param {?string} color One of either 'good', 'warning', 'danger', or a hexadecimal color code.
- * @param {?Array.<object>} fields Optional array of fields that should appear as a table in the attachment.
- * @return {object} The composition of the attachment as a JSON object.
- */
-function newAttachment(fallback, title, pretext, text, color, fields) {
+function newAttachment(fallback, options) {
   var attachment = {
-    'fallback': fallback,
-    'mrkdwn_in': ['pretext', 'text']
+    "fallback": fallback,
+    "mrkdwn_in": ["pretext", "text"]
   };
   
-  if (title !== null) {
-    attachment['title'] = title;
+  var allowed_options = ["color",
+                         "pretext",
+                         "author_name",
+                         "author_link",
+                         "author_icon",
+                         "title",
+                         "title_link",
+                         "text",
+                         "fields",
+                         "image_url",
+                         "thumb_url"];
+  
+  if (options) {
+    for (var i = 0; i < allowed_options.length; i++) {
+      // Loop through allowed options per Slack incoming webhook documentation.
+      
+      if (options[allowed_options[i]]) {
+        // If that hash exists in the options parameter, add it to the composed
+        // attachment which is returned by the function.
+        
+        attachment[allowed_options[i]] = options[allowed_options[i]];
+      }
+    }
   }
   
-  if (pretext !== null) {
-    attachment['pretext'] = pretext;
-  }
-  
-  if (text !== null) {
-    attachment['text'] = text;
-  }
-  
-  if (color !== null) {
-    attachment['color'] = color;
-  }
-  
-  if (fields !== null) {
-    attachment['fields'] = fields;
-  }
-  
-  // Logger.log('New attachment: ' + JSON.stringify(attachment));
+  Logger.log("New attachment: " + JSON.stringify(attachment));
   return attachment;
 }
 
 /**
- * Composes a field to include in an attachment.
- *
  * @param {string} title Required title of the field.
  * @param {(string|number)} value Required value of the field.
  * @param {boolean} short Flag indicating whether the field is short enough to be displayed side-by-side with another field.
@@ -54,34 +46,36 @@ function newField(title, value, short) {
     'short': short
   };
   
-  // Logger.log('New attachment field: ' + JSON.stringify(field));
+  Logger.log('New attachment field: ' + JSON.stringify(field));
   return field;
 }
 
-/**
- * Composes and sends a message to a Slack incoming webhook.
- *
- * @param {string} channel Required #channel or @username recipient of the message.
- * @param {string} text Required content of the message.
- * @param {?Array.<object>} attachments Optional array of attachments to include with the message.
- * @param {string} url Incoming webhook URL to post the message to.
- */
-function postMessage(channel, text, attachments, url) {
+function postMessage(url, text, options) {
   var payload = {
-    'channel': channel,
-    'text': text
-  };
-  
-  if (attachments !== null) {
-    payload['attachments'] = attachments;
+    "text": text
   }
-
-  var httpPostRequest = UrlFetchApp.fetch(url, {
-    'method': 'post',
-    'muteHttpExceptions': true,
-    'payload': JSON.stringify(payload)
-  });
   
-  // Logger.log('Payload sent: ' + JSON.stringify(payload));
-  // Logger.log('Response received: ' + httpPostRequest.getContentText());
+  var allowed_options = ["attachments",
+                         "channel",
+                         "icon_emoji",
+                         "username"];
+  
+  if (options) {
+    for (var i = 0; i < allowed_options.length; i++) {
+      // Loop through allowed options per Slack incoming webhook documentation.
+      
+      if(options[allowed_options[i]]) {
+        // If that hash exists in the options parameter, add it to the composed
+        // attachment which is returned by the function.
+        
+        payload[allowed_options[i]] = options[allowed_options[i]];
+      }
+    }
+  }
+  
+  var webhookPostRequest = UrlFetchApp.fetch(url, {
+    "method": "post",
+    "muteHttpExceptions": true,
+    "payload": JSON.stringify(payload)
+  });
 }
