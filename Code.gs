@@ -1,3 +1,11 @@
+/**
+ * @param {string} fallback Required plain-text summary of the attachment,
+ * shown by clients that understand attachments but choose not to show them.
+ * @param {?Object} options Optional properties to control the content and
+ * presentation of the attachment.
+ * @returns {Object} The composition of the attachment, as a JSON object.
+ * @todo Document allowed options.
+ */
 function newAttachment(fallback, options) {
   var attachment = {
     "fallback": fallback,
@@ -34,10 +42,11 @@ function newAttachment(fallback, options) {
 }
 
 /**
- * @param {string} title Required title of the field.
- * @param {(string|number)} value Required value of the field.
- * @param {boolean} short Flag indicating whether the field is short enough to be displayed side-by-side with another field.
- * @return {object} The composition of the field as a JSON object.
+ * @param {string} title Shown as a bold heading above the `value` text.
+ * @param {(string|number)} value The text value of the field.
+ * @param {boolean} short Flag indicating whether the `value` is short enough
+ * to be displayed side-by-side with other fields.
+ * @returns {Object} The composition of the field, as a JSON object.
  */
 function newField(title, value, short) {
   var field = {
@@ -50,6 +59,13 @@ function newField(title, value, short) {
   return field;
 }
 
+/**
+ * @param {string} url Slack URL where messages for the webhook can be received.
+ * @param {string} text Content of the incoming webhook.
+ * @param {?Object} options Optional properties to control the content and
+ * presentation of the message.
+ * @todo Document allowed options.
+ */
 function postMessage(url, text, options) {
   var payload = {
     "text": text
