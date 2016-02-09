@@ -21,10 +21,10 @@ Usage
 Most simply, you can send a message to a channel with the following syntax:
 
     newField(title, value, short);
-    newAttachment(fallback, title, pretext, text, color, fields);
-    postMessage(channel, message, attachments, url);
+    newAttachment(fallback, options);
+    postMessage(url, text, options);
 
-For both `fields` and `attachments`, values should be passed in an array. If you're not including any fields or attachments in the message, you can simply use `NULL` instead and not call the corresponding functions.
+For either function, `options` is a JSON object containing any of the optional properties you want to define (color, title, fields, attachments, channel, and so forth).
 
 Reference
 ---------
