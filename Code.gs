@@ -1,4 +1,6 @@
 /**
+ * Composes an attachment to be included with the message.
+ *
  * @param {string} fallback Required plain-text summary of the attachment,
  * shown by clients that understand attachments but choose not to show them.
  * @param {?Object} options Optional properties to control the content and
@@ -42,6 +44,8 @@ function newAttachment(fallback, options) {
 }
 
 /**
+ * Composes a field to include in an attachment.
+ *
  * @param {string} title Shown as a bold heading above the `value` text.
  * @param {(string|number)} value The text value of the field.
  * @param {boolean} short Flag indicating whether the `value` is short enough
@@ -60,6 +64,8 @@ function newField(title, value, short) {
 }
 
 /**
+ * Composes and sends a message to a Slack incoming webhook.
+ *
  * @param {string} url Slack URL where messages for the webhook can be received.
  * @param {string} text Content of the incoming webhook.
  * @param {?Object} options Optional properties to control the content and
