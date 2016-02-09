@@ -6,7 +6,6 @@
  * @param {?Object} options Optional properties to control the content and
  * presentation of the attachment.
  * @returns {Object} The composition of the attachment, as a JSON object.
- * @todo Document allowed options.
  */
 function newAttachment(fallback, options) {
   var attachment = {
@@ -70,7 +69,6 @@ function newField(title, value, short) {
  * @param {string} text Content of the incoming webhook.
  * @param {?Object} options Optional properties to control the content and
  * presentation of the message.
- * @todo Document allowed options.
  */
 function postMessage(url, text, options) {
   var payload = {
